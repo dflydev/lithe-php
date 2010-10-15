@@ -14,7 +14,7 @@ $context->add('lithe.dispatcher', array(
     'parent' => 'halo.dispatcher',
     'dependencies' => array(
         'lithe.defaultHandlerMapping',
-        'lithe.viewResolver',
+        'lithe.views.defaultViewResolver',
     ),
 ));
 
@@ -58,31 +58,23 @@ $context->add('lithe.controllers.defaultParentController', array(
 ));
 
 /**
- * View resolver
+ * Lithe default view resolver
  */
-$context->add('lithe.viewResolver', array(
-    'className' => 'halo_ResourceLocatorViewResolver',
+$context->add('lithe.views.defaultViewResolver', array(
+    'className' => 'halo_view_ViewFactoryResourceViewResolver',
     'constructorArgs' => array(
-        'resourceLocator' => $context->ref('lithe.views.resourceLocator'),
+        'viewFactory' => $context->ref('lithe.views.skittle.viewFactory'),
     ),
     'properties' => array(
-        'viewClass' => '${lithe.views.default.class}',
-        'suffix' => '${lithe.views.default.suffix}',
-        'dependencyMap' => array(
-            'halo_SkittleView' => array(
-                'lithe.view.skittle.resourceLocator'
-            ),
-        ),
+        'suffix' => '.php',
     ),
 ));
 
 /**
- * Resource locator for Skittle view
- *
- * Used for sub views.
+ * Skittle view factor
  */
-$context->add('lithe.view.skittle.resourceLocator', array(
-    'className' => 'halo_skittle_SubstrateResourceLocatorAdapter',
+$context->add('lithe.views.skittle.viewFactory', array(
+    'className' => 'halo_view_skittle_SkittleViewFactory',
     'constructorArgs' => array(
         'resourceLocator' => $context->ref('lithe.views.resourceLocator'),
     ),
