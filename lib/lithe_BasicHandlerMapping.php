@@ -3,13 +3,13 @@
 require_once('dd_logging_LogFactory.php');
 require_once('dd_logging_ILogger.php');
 
-require_once('halo_AbstractHandlerMapping.php');
+require_once('halo_handler_AbstractHandlerMapping.php');
 require_once('halo_HttpRequest.php');
 require_once('halo_DispatcherUtil.php');
 
 require_once('substrate_IClassLoader.php');
 
-class lithe_BasicHandlerMapping extends halo_AbstractHandlerMapping {
+class lithe_BasicHandlerMapping extends halo_handler_AbstractHandlerMapping {
     
     /**
      * Logger
