@@ -54,16 +54,36 @@ class lithe_ContextUtil {
             'constructorArgs' => array( 'locations' => $paths, ),
         ));
     }
+
+    /**
+     * Configure dependencies for the dispatcher
+     * 
+     * Used to specify which stones should be initialized prior to the
+     * dispatcher executing.
+     * 
+     * @param substrate_Context $context
+     * @param array $dependencies
+     */
+    static public function CONFIGURE_DISPATCHER_DEPENDENCIES(substrate_Context $context, $dependencies = null) {
+
+        if ( $dependencies and is_array($dependencies) ) {
+            foreach ( $dependencies as $stoneName ) {
+                $context->get($stoneName);
+            }
+        }
+        
+    }
     
     /**
      * Execute the dispatcher
      * @param substrate_Context $context
+     * @param array $dependencies
      */
-    static public function DISPATCH(substrate_Context $context) {
-        
+    static public function DISPATCH(substrate_Context $context, $dependencies = null) {
+
         // Get the Lithe dispatcher
         $dispatcher = $context->get('lithe.dispatcher');
-
+        
         // Do the service.
         $dispatcher->doService(
             halo_DispatcherUtil::MAKE_HTTP_REQUEST($context),

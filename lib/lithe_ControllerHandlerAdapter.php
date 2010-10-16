@@ -34,6 +34,10 @@ class lithe_ControllerHandlerAdapter implements halo_IHandlerAdapter {
         $method = lithe_ContextUtil::GET_CONTROLLER_METHOD($httpRequest);
         $uriParams = lithe_ContextUtil::GET_URI_PARAMS($httpRequest);
         
+        if ( method_exists($handler, 'setHttpRequestAndResponse') ) {
+            $handler->setHttpRequestAndResponse($httpRequest, $httpResponse);
+        }
+        
         if ( is_assoc($uriParams) ) { $args[] = $uriParams; }
         else { $args = $uriParams; }
 

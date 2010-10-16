@@ -46,6 +46,18 @@ class lithe_Controller implements lithe_IController, substrate_stones_IContextAw
     protected $context;
     
     /**
+     * HTTP Request
+     * @var halo_HttpRequest
+     */
+    protected $httpRequest;
+    
+    /**
+     * HTTP Response
+     * @var halo_HttpResponse
+     */
+    protected $httpResponse;
+    
+    /**
      * Constructor
      */
     public function __construct() {
@@ -71,9 +83,19 @@ class lithe_Controller implements lithe_IController, substrate_stones_IContextAw
      * @return halo_ModelAndView
      */
     public function generateHaloModelAndView() {
+        $this->model->set('baseUri', $this->httpRequest->scriptPathRoot());
         return new halo_ModelAndView($this->view ? $this->view : $this->defaultView, $this->model->export());
     }
 
+    /**
+     * Set Halo's HTTP Request and HTTP Response objects
+     * @param $httpRequest
+     * @param $httpResponse
+     */
+    public function setHttpRequestAndResponse(halo_HttpRequest $httpRequest, halo_HttpResponse $httpResponse) {
+        $this->httpRequest = $httpRequest;
+        $this->httpResponse = $httpResponse;
+    }
 }
 
 lithe_Controller::$LOGGER = dd_logging_LogFactory::get('lithe_Controller');

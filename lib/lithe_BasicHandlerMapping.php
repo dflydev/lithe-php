@@ -9,7 +9,7 @@ require_once('halo_DispatcherUtil.php');
 
 require_once('substrate_IClassLoader.php');
 
-class lithe_DefaultHandlerMapping extends halo_AbstractHandlerMapping {
+class lithe_BasicHandlerMapping extends halo_AbstractHandlerMapping {
     
     /**
      * Logger
@@ -39,7 +39,7 @@ class lithe_DefaultHandlerMapping extends halo_AbstractHandlerMapping {
      * @param halo_HttpRequest $httpRequest
      */
     protected function getHandlerInternal(halo_HttpRequest $httpRequest) {
-        
+
         $requestedUri = $httpRequest->requestedUri();
         
         if ( ! $requestedUri ) {
@@ -63,6 +63,7 @@ class lithe_DefaultHandlerMapping extends halo_AbstractHandlerMapping {
 
         if ( count($uriParts) > 0 ) {
             $method = array_shift($uriParts);
+            if ( $method === '' ) $method = null;
         }
 
         if ( $method === null ) {
@@ -121,4 +122,4 @@ class lithe_DefaultHandlerMapping extends halo_AbstractHandlerMapping {
     
 }
 
-lithe_DefaultHandlerMapping::$LOGGER = dd_logging_LogFactory::get('lithe_DefaultHandlerMapping');
+lithe_BasicHandlerMapping::$LOGGER = dd_logging_LogFactory::get('lithe_BasicHandlerMapping');

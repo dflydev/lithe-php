@@ -12,16 +12,12 @@ $context->import('halo_base.context.php');
  */
 $context->add('lithe.dispatcher', array(
     'parent' => 'halo.dispatcher',
-    'dependencies' => array(
-        'lithe.defaultHandlerMapping',
-        'lithe.views.defaultViewResolver',
-    ),
 ));
 
 /**
  * Lithe controller handler adapter
  */
-$context->add('lithe.controllerHandlerAdapter', array(
+$context->add('lithe.handlers.controllerHandlerAdapter', array(
     'className' => 'lithe_ControllerHandlerAdapter',
 ));
 
@@ -38,14 +34,14 @@ $context->add('lithe.controllers.classLoader', array(
 /**
  * Default handler mapping
  */
-$context->add('lithe.defaultHandlerMapping', array(
-    'className' => 'lithe_DefaultHandlerMapping',
+$context->add('lithe.handlers.defaultHandlerMapping', array(
+    'className' => 'lithe_BasicHandlerMapping',
     'constructorArgs' => array(
         'configuration' => $context->ref('lithe.controllers.configuration'),
         'classLoader' => $context->ref('lithe.controllers.classLoader'),
     ),
     'dependencies' => array(
-        'lithe.controllerHandlerAdapter',
+        'lithe.handlers.controllerHandlerAdapter',
     ),
 ));
 
@@ -66,7 +62,7 @@ $context->add('lithe.views.defaultViewResolver', array(
         'viewFactory' => $context->ref('lithe.views.skittle.viewFactory'),
     ),
     'properties' => array(
-        'suffix' => '.php',
+        'suffix' => '${lithe.views.default.suffix}',
     ),
 ));
 
