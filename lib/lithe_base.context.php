@@ -59,7 +59,7 @@ $context->add('lithe.controllers.defaultParentController', array(
 $context->add('lithe.views.defaultViewResolver', array(
     'className' => 'halo_view_ViewFactoryResourceViewResolver',
     'constructorArgs' => array(
-        'viewFactory' => $context->ref('lithe.views.skittle.viewFactory'),
+        'viewFactory' => $context->ref('${lithe.views.default.viewFactoryStone}'),
     ),
     'properties' => array(
         'suffix' => '${lithe.views.default.suffix}',
