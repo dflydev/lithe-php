@@ -75,3 +75,29 @@ $context->add('lithe.views.skittle.viewFactory', array(
         'resourceLocator' => $context->ref('lithe.views.resourceLocator'),
     ),
 ));
+
+/**
+ * URI Helper Factory
+ * 
+ * This gets us a URI helper that we can use to generate absolute
+ * and cross site URIs.
+ */
+$context->add('lithe.helpers.uriHelperFactory', array(
+    'className' => 'halo_helper_UriHelperFactory',
+    'constructorArgs' => array(
+        'uriConfiguration' => $context->ref('lithe.uriConfiguration'),
+    ),
+    'lazyLoad' => false,
+));
+
+/**
+ * URI Configuration
+ * 
+ * We default to our app configuration instance.
+ */
+$context->set('lithe.uriConfiguration', array(
+    'className' => 'dd_uri_UriConfiguration',
+    'constructorArgs' => array(
+        'configuration' => $context->ref('configuration')
+    ),
+));

@@ -11,6 +11,8 @@ require_once('substrate_stones_IContextAware.php');
 
 require_once('halo_ModelAndView.php');
 
+require_once('halo_HelperUtil.php');
+
 class lithe_Controller implements lithe_IController, substrate_stones_IContextAware {
     
     /**
@@ -96,6 +98,15 @@ class lithe_Controller implements lithe_IController, substrate_stones_IContextAw
         $this->httpRequest = $httpRequest;
         $this->httpResponse = $httpResponse;
     }
+    
+    public function helper($name) {
+        halo_HelperUtil::REGISTER_HELPER_NAME($this->httpRequest, $name);
+        return halo_HelperUtil::MANAGER(
+            $this->httpRequest,
+            $this->httpResponse
+        )->helper($name);
+    }
+    
 }
 
 lithe_Controller::$LOGGER = dd_logging_LogFactory::get('lithe_Controller');
