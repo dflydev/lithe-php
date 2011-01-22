@@ -77,19 +77,24 @@ class lithe_ContextUtil {
     /**
      * Execute the dispatcher
      * @param substrate_Context $context
-     * @param array $dependencies
+     * @param callback $beforeDoService
+     * @param callback $afterDoService
      */
-    static public function DISPATCH(substrate_Context $context, $dependencies = null) {
+    static public function DISPATCH(substrate_Context $context, $beforeDoService = null, $afterDoService = null) {
 
         // Get the Lithe dispatcher
         $dispatcher = $context->get('lithe.dispatcher');
         
+        $request = halo_DispatcherUtil::MAKE_HTTP_REQUEST($context);
+        $response = halo_DispatcherUtil::MAKE_HTTP_RESPONSE();
+        
+        if ( $beforeDoService ) { call_user_func($beforeDoService, $context, $request, $response); }
+        
         // Do the service.
-        $dispatcher->doService(
-            halo_DispatcherUtil::MAKE_HTTP_REQUEST($context),
-            halo_DispatcherUtil::MAKE_HTTP_RESPONSE()
-        );
+        $dispatcher->doService($request, $response);
 
+        if ( $afterDoService ) { call_user_func($afterDoService, $context, $request, $response); }
+        
     }
     
     /**
